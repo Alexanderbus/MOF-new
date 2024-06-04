@@ -15,6 +15,8 @@
     }
 
     .footer__link {
+        position: absolute;
+        bottom: 0;
         text-decoration: none;
         color: aliceblue;
         font-family: 'Poppins', sans-serif;
@@ -40,7 +42,7 @@
         font-family: 'Poppins', sans-serif;
         font-size: 30px;
         color: white;
-        background: #6225E6;
+        background: 	#231F4F;
         transition: 1s;
         box-shadow: 9px 9px 0 black;
         transform: skewX(-15deg);
@@ -166,7 +168,7 @@
         font-family: 'Poppins', sans-serif;
         font-size: 40px;
         color: white;
-        background: #6225E6;
+        background: #231F4F;
         transition: 1s;
         box-shadow: 6px 6px 0 black;
         transform: skewX(-15deg);
