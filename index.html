@@ -1,66 +1,629 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOF New Chapter</title>
-    <link rel="stylesheet" href="./style.css">
+    <title>Танцевальные мастер-классы</title>
+    <link rel="stylesheet" href="../fonts/Inter Web/inter.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header__logo {
+            max-width: 16.67%;
+            height: auto;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .content__title {
+            font-family: 'Inter', 'Arial', sans-serif;
+            font-size: 24px; /* Еще уменьшен размер текста */
+            font-weight: 900;
+            line-height: 28px; /* Соответственно уменьшен line-height */
+            letter-spacing: 0em;
+            margin: 0; /* Убраны отступы */
+            background-color: rgba(0, 0, 0, 0.1); /* Полупрозрачный черный фон, еле заметный */
+            padding: 10px; /* Отступы вокруг текста */
+            display: inline-block; /* Для корректного отображения фона */
+            border-radius: 5px; /* Скругленные углы */
+            text-transform: uppercase; /* Заглавные буквы */
+        }
+        .content__title span {
+            display: block;
+        }
+        .content__buttons {
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .content__button {
+            margin: 10px 0;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-family: 'Inter', 'Arial', sans-serif; /* Шрифт как у заголовка */
+            font-size: 24px; /* Размер текста как у заголовка */
+            font-weight: 900; /* Жирность как у заголовка */
+            line-height: 28px; /* Межстрочный интервал как у заголовка */
+            letter-spacing: 0em; /* Интервал между буквами как у заголовка */
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            transition: .2s linear;
+            background: #6c757d; /* Серый цвет кнопок */
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #8a8a8a; /* Серый цвет для внешнего тени */
+            text-transform: uppercase; /* Заглавные буквы */
+        }
+        .content__button:hover {
+            background-color: #5a6268; /* Более темный серый цвет при наведении */
+        }
+        .content__button span {
+            display: block;
+        }
+        .content__location {
+            color: white; /* Сделать текст белым */
+            background-color: rgba(0, 0, 0, 0.6); /* Добавлен фон */
+            padding: 10px; /* Добавлены отступы */
+            border-radius: 5px; /* Скругленные углы */
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .content__location span {
+            display: block;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+        }
+        .footer__contacts {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer__contacts a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .footer__contacts a:hover {
+            text-decoration: underline;
+        }
+        .footer__contacts img {
+            width: 16px;
+            height: 16px;
+        }
+        .footer__small-text {
+            font-size: 10px;
+            color: gray;
+        }
+        .footer__payment-systems {
+            font-size: 10px; /* Размер шрифта как у реквизитов ИП */
+            color: gray; /* Цвет шрифта как у реквизитов ИП */
+        }
+        .footer__links {
+            font-size: 10px; /* Размер шрифта как у реквизитов ИП */
+            color: gray; /* Цвет шрифта как у реквизитов ИП */
+        }
+        .footer__links a {
+            color: gray; /* Цвет ссылок как у реквизитов ИП */
+            text-decoration: none; /* Убрать подчеркивание ссылок */
+            margin: 0 5px;
+        }
+        .footer__links a:hover {
+            text-decoration: underline; /* Добавить подчеркивание при наведении */
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .popup__content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .popup__close {
+            float: right;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+        }
+        .popup__title {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-align: center;
+            color: black;
+        }
+        .popup__form label {
+            display: block;
+            margin-bottom: 5px;
+            color: black;
+        }
+        .popup__form input[type="text"],
+        .popup__form input[type="email"],
+        .popup__form input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 5px;
+            border: none;
+            border-bottom: 2px solid black;
+            box-sizing: border-box;
+            border-radius: 0;
+        }
+        .popup__form input[type="text"]:focus,
+        .popup__form input[type="email"]:focus,
+        .popup__form input[type="tel"]:focus {
+            border-bottom: 2px solid black;
+            outline: none;
+        }
+        .popup__form input[type="text"].error,
+        .popup__form input[type="email"].error,
+        .popup__form input[type="tel"].error {
+            border-bottom: 2px solid red;
+        }
+        .popup__form .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: -5px;
+            margin-bottom: 10px;
+            display: none;
+        }
+        .popup__form .error-message.active {
+            display: block;
+        }
+        .popup__form .custom-checkbox {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .popup__form .custom-checkbox input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        .popup__form .checkmark {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 2px solid black;
+            margin-right: 10px;
+        }
+        .popup__form .custom-checkbox input[type="checkbox"]:checked ~ .checkmark {
+            background-color: black;
+        }
+        .popup__form .checkmark::after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        .popup__form .custom-checkbox input[type="checkbox"]:checked ~ .checkmark::after {
+            display: block;
+        }
+        .popup__form .custom-checkbox .checkmark::after {
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        .popup__form .error-agreement {
+            color: red;
+            font-size: 12px;
+            margin-top: -5px;
+            margin-bottom: 10px;
+            display: none;
+        }
+        .popup__form .error-agreement.active {
+            display: block;
+        }
+        .popup__form button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: black;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .popup__form button:hover {
+            background-color: #333;
+        }
+
+        /* Адаптивный дизайн */
+        /* Для телефонов (макс. ширина 600px) */
+        @media (max-width: 600px) {
+            .header__logo {
+                max-width: 100%;
+            }
+            .content__title {
+                font-size: 20px; /* Соответственно уменьшен размер текста для мобильных устройств */
+                line-height: 24px;
+            }
+            .content__button {
+                width: auto;
+                margin: 5px 0;
+                padding: 10px;
+                font-size: 20px; /* Соответственно уменьшен размер текста для мобильных устройств */
+                line-height: 24px;
+            }
+            .footer__contacts, .footer__small-text {
+                font-size: 10px;
+            }
+            .footer__payment-systems, .footer__links {
+                font-size: 10px; /* Соответственно уменьшен размер шрифта для мобильных устройств */
+                color: gray; /* Соответственно изменен цвет шрифта для мобильных устройств */
+            }
+        }
+
+        /* Для планшетов (макс. ширина 768px) */
+        @media (max-width: 768px) {
+            .header__logo {
+                max-width: 75%;
+            }
+            .content__title {
+                font-size: 22px; /* Соответственно уменьшен размер текста для планшетов */
+                line-height: 26px;
+            }
+            .content__button {
+                width: auto;
+                margin: 5px 0;
+                padding: 10px;
+                font-size: 22px; /* Соответственно уменьшен размер текста для планшетов */
+                line-height: 26px;
+            }
+            .footer__contacts, .footer__small-text {
+                font-size: 11px;
+            }
+            .footer__payment-systems, .footer__links {
+                font-size: 11px; /* Соответственно уменьшен размер шрифта для планшетов */
+                color: gray; /* Соответственно изменен цвет шрифта для планшетов */
+            }
+        }
+
+        /* Для ноутбуков и ПК (мин. ширина 769px) */
+        @media (min-width: 769px) {
+            .header__logo {
+                max-width: 16.67%; /* Логотип уменьшен в три раза */
+            }
+            .content__title {
+                font-size: 24px; /* Еще уменьшен размер текста */
+                line-height: 28px; /* Соответственно уменьшен line-height */
+            }
+            .content__button {
+                width: auto;
+                margin: 5px;
+                padding: 10px 15px;
+                font-size: 24px; /* Соответственно уменьшен размер текста */
+                line-height: 28px;
+            }
+            .footer__contacts, .footer__small-text {
+                font-size: 12px;
+            }
+            .footer__payment-systems, .footer__links {
+                font-size: 10px; /* Соответственно уменьшен размер шрифта */
+                color: gray; /* Соответственно изменен цвет шрифта */
+            }
+        }
+    </style>
 </head>
 <body>
-    <body>
-        <div class="page">
-          <header class="header">
-            <img src="./mof royal logo white.svg" alt="лого" class="header__logo">
-          </header>
-          <main class="content">
-            <div class="wrapper">
-              <a class="cta" href="#">
-                <span>FULL PASS</span>
-                <span>
-                  <svg class="arrow" width="66px" height="43px" viewBox="0 0 66 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                      <path class="one" d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z" fill="#FFFFFF"></path>
-                      <path class="two" d="M20.1543933,3.89485454 L23.9763149,0.139296592 C24.1708311,-0.0518420739 24.4826329,-0.0518571125 24.6771675,0.139262789 L45.6916134,20.7848311 C46.0855801,21.1718824 46.0911863,21.8050225 45.704135,22.1989893 C45.7000188,22.2031791 45.6958657,22.2073326 45.6916762,22.2114492 L24.677098,42.8607841 C24.4825957,43.0519059 24.1708242,43.0519358 23.9762853,42.8608513 L20.1545186,39.1069479 C19.9575152,38.9134427 19.9546793,38.5968729 20.1481845,38.3998695 C20.1502893,38.3977268 20.1524132,38.395603 20.1545562,38.3934985 L36.9937789,21.8567812 C37.1908028,21.6632968 37.193672,21.3467273 37.0001876,21.1497035 C36.9980647,21.1475418 36.9959223,21.1453995 36.9937605,21.1432767 L20.1545208,4.60825197 C19.9574869,4.41477773 19.9546013,4.09820839 20.1480756,3.90117456 C20.1501626,3.89904911 20.1522686,3.89694235 20.1543933,3.89485454 Z" fill="#FFFFFF"></path>
-                      <path class="three" d="M0.154393339,3.89485454 L3.97631488,0.139296592 C4.17083111,-0.0518420739 4.48263286,-0.0518571125 4.67716753,0.139262789 L25.6916134,20.7848311 C26.0855801,21.1718824 26.0911863,21.8050225 25.704135,22.1989893 C25.7000188,22.2031791 25.6958657,22.2073326 25.6916762,22.2114492 L4.67709797,42.8607841 C4.48259567,43.0519059 4.17082418,43.0519358 3.97628526,42.8608513 L0.154518591,39.1069479 C-0.0424848215,38.9134427 -0.0453206733,38.5968729 0.148184538,38.3998695 C0.150289256,38.3977268 0.152413239,38.395603 0.154556228,38.3934985 L16.9937789,21.8567812 C17.1908028,21.6632968 17.193672,21.3467273 17.0001876,21.1497035 C16.9980647,21.1475418 16.9959223,21.1453995 16.9937605,21.1432767 L0.15452076,4.60825197 C-0.0425130651,4.41477773 -0.0453986756,4.09820839 0.148075568,3.90117456 C0.150162624,3.89904911 0.152268631,3.89694235 0.154393339,3.89485454 Z" fill="#FFFFFF"></path>
-                    </g>
-                  </svg>
-                </span> 
-              </a>
+    <header>
+        <img src="logo.svg" alt="Логотип" class="header__logo">
+    </header>
+
+    <div class="content">
+        <h1 class="content__title">
+            <span>Танцевальные мастер-классы</span>
+            <span>по Dancehall</span>
+        </h1>
+
+        <div class="content__buttons">
+            <div class="content__button" data-popup="fullPassPopup">
+                <span>FULL PASS (6 КЛАССОВ)</span>
+                <span>16.000 РУБЛЕЙ</span>
             </div>
-            <div class="wrapper">
-              <a class="cta" href="#">
-                <span>KIDS/MALE PASS</span>
-                <span>
-                  <svg class="arrow" width="66px" height="43px" viewBox="0 0 66 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <g class="arrow" id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                      <path class="one" d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z" fill="#FFFFFF"></path>
-                      <path class="two" d="M20.1543933,3.89485454 L23.9763149,0.139296592 C24.1708311,-0.0518420739 24.4826329,-0.0518571125 24.6771675,0.139262789 L45.6916134,20.7848311 C46.0855801,21.1718824 46.0911863,21.8050225 45.704135,22.1989893 C45.7000188,22.2031791 45.6958657,22.2073326 45.6916762,22.2114492 L24.677098,42.8607841 C24.4825957,43.0519059 24.1708242,43.0519358 23.9762853,42.8608513 L20.1545186,39.1069479 C19.9575152,38.9134427 19.9546793,38.5968729 20.1481845,38.3998695 C20.1502893,38.3977268 20.1524132,38.395603 20.1545562,38.3934985 L36.9937789,21.8567812 C37.1908028,21.6632968 37.193672,21.3467273 37.0001876,21.1497035 C36.9980647,21.1475418 36.9959223,21.1453995 36.9937605,21.1432767 L20.1545208,4.60825197 C19.9574869,4.41477773 19.9546013,4.09820839 20.1480756,3.90117456 C20.1501626,3.89904911 20.1522686,3.89694235 20.1543933,3.89485454 Z" fill="#FFFFFF"></path>
-                      <path class="three" d="M0.154393339,3.89485454 L3.97631488,0.139296592 C4.17083111,-0.0518420739 4.48263286,-0.0518571125 4.67716753,0.139262789 L25.6916134,20.7848311 C26.0855801,21.1718824 26.0911863,21.8050225 25.704135,22.1989893 C25.7000188,22.2031791 25.6958657,22.2073326 25.6916762,22.2114492 L4.67709797,42.8607841 C4.48259567,43.0519059 4.17082418,43.0519358 3.97628526,42.8608513 L0.154518591,39.1069479 C-0.0424848215,38.9134427 -0.0453206733,38.5968729 0.148184538,38.3998695 C0.150289256,38.3977268 0.152413239,38.395603 0.154556228,38.3934985 L16.9937789,21.8567812 C17.1908028,21.6632968 17.193672,21.3467273 17.0001876,21.1497035 C16.9980647,21.1475418 16.9959223,21.1453995 16.9937605,21.1432767 L0.15452076,4.60825197 C-0.0425130651,4.41477773 -0.0453986756,4.09820839 0.148075568,3.90117456 C0.150162624,3.89904911 0.152268631,3.89694235 0.154393339,3.89485454 Z" fill="#FFFFFF"></path>
-                    </g>
-                  </svg>
-                </span> 
-              </a>
+            <div class="content__button" data-popup="maleKidsPassPopup">
+                <span>MALE/KIDS PASS (5 КЛАССОВ)</span>
+                <span>14.000 РУБЛЕЙ</span>
             </div>
-            <div class="wrapper">
-              <a class="cta" href="#">
-                <span>ONE CLASS</span>
-                <span>
-                  <svg class="arrow" width="66px" height="43px" viewBox="0 0 66 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                      <path class="one" d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z" fill="#FFFFFF"></path>
-                      <path class="two" d="M20.1543933,3.89485454 L23.9763149,0.139296592 C24.1708311,-0.0518420739 24.4826329,-0.0518571125 24.6771675,0.139262789 L45.6916134,20.7848311 C46.0855801,21.1718824 46.0911863,21.8050225 45.704135,22.1989893 C45.7000188,22.2031791 45.6958657,22.2073326 45.6916762,22.2114492 L24.677098,42.8607841 C24.4825957,43.0519059 24.1708242,43.0519358 23.9762853,42.8608513 L20.1545186,39.1069479 C19.9575152,38.9134427 19.9546793,38.5968729 20.1481845,38.3998695 C20.1502893,38.3977268 20.1524132,38.395603 20.1545562,38.3934985 L36.9937789,21.8567812 C37.1908028,21.6632968 37.193672,21.3467273 37.0001876,21.1497035 C36.9980647,21.1475418 36.9959223,21.1453995 36.9937605,21.1432767 L20.1545208,4.60825197 C19.9574869,4.41477773 19.9546013,4.09820839 20.1480756,3.90117456 C20.1501626,3.89904911 20.1522686,3.89694235 20.1543933,3.89485454 Z" fill="#FFFFFF"></path>
-                      <path class="three" d="M0.154393339,3.89485454 L3.97631488,0.139296592 C4.17083111,-0.0518420739 4.48263286,-0.0518571125 4.67716753,0.139262789 L25.6916134,20.7848311 C26.0855801,21.1718824 26.0911863,21.8050225 25.704135,22.1989893 C25.7000188,22.2031791 25.6958657,22.2073326 25.6916762,22.2114492 L4.67709797,42.8607841 C4.48259567,43.0519059 4.17082418,43.0519358 3.97628526,42.8608513 L0.154518591,39.1069479 C-0.0424848215,38.9134427 -0.0453206733,38.5968729 0.148184538,38.3998695 C0.150289256,38.3977268 0.152413239,38.395603 0.154556228,38.3934985 L16.9937789,21.8567812 C17.1908028,21.6632968 17.193672,21.3467273 17.0001876,21.1497035 C16.9980647,21.1475418 16.9959223,21.1453995 16.9937605,21.1432767 L0.15452076,4.60825197 C-0.0425130651,4.41477773 -0.0453986756,4.09820839 0.148075568,3.90117456 C0.150162624,3.89904911 0.152268631,3.89694235 0.154393339,3.89485454 Z" fill="#FFFFFF"></path>
-                    </g>
-                  </svg>
-                </span> 
-              </a>
+            <div class="content__button" data-popup="oneClassPopup">
+                <span>ONE CLASS (1 КЛАСС)</span>
+                <span>3.000 РУБЛЕЙ</span>
             </div>
-            
-          </main>
-          <footer class="footer">
-          <a href="https://www.instagram.com/mof_newchapter" target="_blank" class="footer__link">INSTAGRAM</a>
-          </footer>
+            <div class="content__button" data-popup="reservationPopup">
+                <span>БРОНИРОВАНИЕ МЕСТА FULL PASS</span>
+                <span>5.000₽</span>
+            </div>
         </div>
-      </body>
+
+        <div class="content__location">
+            <span>МЕСТО ПРОВЕДЕНИЯ:</span>
+            <span>БАУНС (МОСКВА, 3-Я УЛИЦА ЯМСКОГО ПОЛЯ, 2К6)</span>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer__contacts">
+            <a href="https://instagram.com/mof_newchapter" target="_blank">
+                <img src="./logoINST.png" alt="Instagram">
+                @mof_newchapter
+            </a>
+            |
+            <a href="mailto:mofcontest@mail.ru">mofcontest@mail.ru</a>
+        </div>
+        <div class="footer__small-text">
+            Индивидуальный предприниматель Рысин Илья Андреевич <br>
+            ОГРНИП 324527500066739 <br>
+            ИНН 526319280430 <br>
+            603051, Россия, обл Нижегородская, г Нижний Новгород, ул Хальзовская, дом 50
+        </div>
+        <div class="footer__payment-systems">
+            Принимаем к оплате карты платежных систем МИР, Visa и MasterCard
+        </div>
+        <div class="footer__links">
+            <a href="privacy.html">Политика обработки персональных данных</a> | 
+            <a href="offer.html">Оферта</a>
+        </div>
+    </footer>
+
+    <div id="fullPassPopup" class="popup">
+        <div class="popup__content">
+            <span class="popup__close" onclick="closePopup('fullPassPopup')">&times;</span>
+            <div class="popup__title">Заполните данные</div>
+            <form class="popup__form" onsubmit="return validateAndSubmitForm(this)" novalidate>
+                <label>ФИО: <input type="text" name="name"></label>
+                <label class="error-message" id="name-error">Имя должно быть более 2 символов.</label>
+                <label>Номер телефона: <input type="tel" name="phone"></label>
+                <label class="error-message" id="phone-error">Введите правильный номер телефона.</label>
+                <label>Email: <input type="email" name="email"></label>
+                <label class="error-message" id="email-error">Введите правильный адрес электронной почты.</label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" name="agreement">
+                    <span class="checkmark"></span>
+                    Нажимая кнопку оплатить, вы соглашаетесь с офертой и политикой обработки персональных данных
+                </label>
+                <label class="error-agreement" id="agreement-error">Согласитесь с обработкой ваших данных</label>
+                <button type="submit">Оплатить</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="maleKidsPassPopup" class="popup">
+        <div class="popup__content">
+            <span class="popup__close" onclick="closePopup('maleKidsPassPopup')">&times;</span>
+            <div class="popup__title">Заполните данные</div>
+            <form class="popup__form" onsubmit="return validateAndSubmitForm(this)" novalidate>
+                <label>ФИО: <input type="text" name="name"></label>
+                <label class="error-message" id="name-error">Имя должно быть более 2 символов.</label>
+                <label>Номер телефона: <input type="tel" name="phone"></label>
+                <label class="error-message" id="phone-error">Введите правильный номер телефона.</label>
+                <label>Email: <input type="email" name="email"></label>
+                <label class="error-message" id="email-error">Введите правильный адрес электронной почты.</label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" name="agreement">
+                    <span class="checkmark"></span>
+                    Нажимая кнопку оплатить, вы соглашаетесь с офертой и политикой обработки персональных данных
+                </label>
+                <label class="error-agreement" id="agreement-error">Согласитесь с обработкой ваших данных</label>
+                <button type="submit">Оплатить</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="oneClassPopup" class="popup">
+        <div class="popup__content">
+            <span class="popup__close" onclick="closePopup('oneClassPopup')">&times;</span>
+            <div class="popup__title">Заполните данные</div>
+            <form class="popup__form" onsubmit="return validateAndSubmitForm(this)" novalidate>
+                <label>ФИО: <input type="text" name="name"></label>
+                <label class="error-message" id="name-error">Имя должно быть более 2 символов.</label>
+                <label>Номер телефона: <input type="tel" name="phone"></label>
+                <label class="error-message" id="phone-error">Введите правильный номер телефона.</label>
+                <label>Email: <input type="email" name="email"></label>
+                <label class="error-message" id="email-error">Введите правильный адрес электронной почты.</label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" name="agreement">
+                    <span class="checkmark"></span>
+                    Нажимая кнопку оплатить, вы соглашаетесь с офертой и политикой обработки персональных данных
+                </label>
+                <label class="error-agreement" id="agreement-error">Согласитесь с обработкой ваших данных</label>
+                <button type="submit">Оплатить</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="reservationPopup" class="popup">
+        <div class="popup__content">
+            <span class="popup__close" onclick="closePopup('reservationPopup')">&times;</span>
+            <div class="popup__title">Заполните данные</div>
+            <form class="popup__form" onsubmit="return validateAndSubmitForm(this)" novalidate>
+                <label>ФИО: <input type="text" name="name"></label>
+                <label class="error-message" id="name-error">Имя должно быть более 2 символов.</label>
+                <label>Номер телефона: <input type="tel" name="phone"></label>
+                <label class="error-message" id="phone-error">Введите правильный номер телефона.</label>
+                <label>Email: <input type="email" name="email"></label>
+                <label class="error-message" id="email-error">Введите правильный адрес электронной почты.</label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" name="agreement">
+                    <span class="checkmark"></span>
+                    Нажимая кнопку оплатить, вы соглашаетесь с офертой и политикой обработки персональных данных
+                </label>
+                <label class="error-agreement" id="agreement-error">Согласитесь с обработкой ваших данных</label>
+                <button type="submit">Оплатить</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Закрытие попапа при нажатии на Esc
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeAllPopups();
+                }
+            });
+
+            // Закрытие попапа при клике на фон
+            document.querySelectorAll('.popup').forEach(popup => {
+                popup.addEventListener('click', (event) => {
+                    if (event.target === popup) {
+                        closePopup(popup.id);
+                    }
+                });
+            });
+
+            // Открытие попапа
+            document.querySelectorAll('.content__button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const popupId = button.getAttribute('data-popup');
+                    openPopup(popupId);
+                });
+            });
+
+            // Закрытие попапа при клике на кнопку закрытия
+            document.querySelectorAll('.popup__close').forEach(button => {
+                button.addEventListener('click', () => {
+                    const popup = button.closest('.popup');
+                    closePopup(popup.id);
+                });
+            });
+        });
+
+        function validateAndSubmitForm(form) {
+            const name = form.name;
+            const phone = form.phone;
+            const email = form.email;
+            const agreement = form.agreement;
+
+            let valid = true;
+
+            if (name.value.length <= 2) {
+                showError(name, 'name-error');
+                valid = false;
+            } else {
+                clearError(name, 'name-error');
+            }
+
+            const phonePattern = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,4}[-\s\.]?[0-9]{1,9}$/im;
+            if (!phonePattern.test(phone.value)) {
+                showError(phone, 'phone-error');
+                valid = false;
+            } else {
+                clearError(phone, 'phone-error');
+            }
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email.value)) {
+                showError(email, 'email-error');
+                valid = false;
+            } else {
+                clearError(email, 'email-error');
+            }
+
+            if (!agreement.checked) {
+                showError(agreement, 'agreement-error');
+                valid = false;
+            } else {
+                clearError(agreement, 'agreement-error');
+            }
+
+            if (valid) {
+                sendToGoogleSheet(name.value, phone.value, email.value);
+            }
+
+            return false; // отменяем стандартную отправку формы
+        }
+
+        function showError(input, errorId) {
+            input.classList.add('error');
+            document.getElementById(errorId).classList.add('active');
+        }
+
+        function clearError(input, errorId) {
+            input.classList.remove('error');
+            document.getElementById(errorId).classList.remove('active');
+        }
+
+        function sendToGoogleSheet(name, phone, email) {
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbywtH4ANb7F5v01tTcLWM-L5dcI-814-Vkarn-AWtRqa5g5my335BlTCQQR3moKUG8V/exec'; // Замените на ваш URL веб-приложения
+            const data = {name, phone, email};
+
+            fetch(scriptURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Регистрация успешно отправлена');
+                    closeAllPopups();
+                } else {
+                    alert('Ошибка отправки регистрации');
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Ошибка отправки регистрации');
+            });
+        }
+
+        function openPopup(popupId) {
+            document.getElementById(popupId).style.display = 'flex';
+        }
+
+        function closePopup(popupId) {
+            document.getElementById(popupId).style.display = 'none';
+        }
+
+        function closeAllPopups() {
+            const popups = document.querySelectorAll('.popup');
+            popups.forEach(popup => {
+                popup.style.display = 'none';
+            });
+        }
+    </script>
 </body>
 </html>
+
